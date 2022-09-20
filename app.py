@@ -304,18 +304,18 @@ def build_quick_stats_panel():
             # ),
             # ],
             # ),
-            html.Div(
-                id="card-2",
-                children=[
-                    html.P("Time to completion"),
-                    daq.Gauge(
-                        id="progress-gauge",
-                        max=max_length * 2,
-                        min=0,
-                        showCurrentValue=True,  # default size 200 pixel
-                    ),
-                ],
-            ),
+            # html.Div(
+            # id="card-2",
+            # children=[
+            # html.P("Time to completion"),
+            # daq.Gauge(
+            # id="progress-gauge",
+            # max=max_length * 2,
+            # min=0,
+            # showCurrentValue=True,  # default size 200 pixel
+            # ),
+            # ],
+            # ),
             html.Div(
                 id="utility-card",
                 children=[daq.StopButton(
@@ -367,42 +367,7 @@ def build_top_panel(stopped_interval):
                     ),
                 ],
             ),
-            # Piechart
-            # html.Div(
-            # id="ooc-piechart-outer",
-            # className="four columns",
-            # children=[
-            # generate_section_banner("% OOC per Parameter"),
-            # generate_piechart(),
-            # ],
-            # ),
         ],
-    )
-
-
-def generate_piechart():
-    return dcc.Graph(
-        id="piechart",
-        figure={
-            "data": [
-                {
-                    "labels": [],
-                    "values": [],
-                    "type": "pie",
-                    "marker": {"line": {"color": "white", "width": 1}},
-                    "hoverinfo": "label",
-                    "textinfo": "label",
-                }
-            ],
-            "layout": {
-                "margin": dict(l=20, r=20, t=20, b=20),
-                "showlegend": True,
-                "paper_bgcolor": "rgba(0,0,0,0)",
-                "plot_bgcolor": "rgba(0,0,0,0)",
-                "font": {"color": "white"},
-                "autosize": True,
-            },
-        },
     )
 
 
@@ -588,10 +553,14 @@ def build_chart_panel():
                             "paper_bgcolor": "rgba(0,0,0,0)",
                             "plot_bgcolor": "rgba(0,0,0,0)",
                             "xaxis": dict(
-                                showline=False, showgrid=False, zeroline=False
+                                showline=False,
+                                showgrid=False,
+                                zeroline=False
                             ),
                             "yaxis": dict(
-                                showgrid=False, showline=False, zeroline=False
+                                showgrid=False,
+                                showline=False,
+                                zeroline=False
                             ),
                             "autosize": True,
                         },
@@ -636,17 +605,6 @@ def generate_graph(interval, specs_dict, col):
             ooc_trace["x"].append(index + 1)
             ooc_trace["y"].append(data)
 
-    histo_trace = {
-        "x": x_array[:total_count],
-        "y": y_array[:total_count],
-        "type": "histogram",
-        "orientation": "h",
-        "name": "Distribution",
-        "xaxis": "x2",
-        "yaxis": "y2",
-        "marker": {"color": "#f4d44d"},
-    }
-
     fig = {
         "data": [
             {
@@ -657,7 +615,6 @@ def generate_graph(interval, specs_dict, col):
                 "line": {"color": "#f4d44d"},
             },
             ooc_trace,
-            histo_trace,
         ]
     }
 
@@ -792,19 +749,6 @@ def generate_graph(interval, specs_dict, col):
                          "width": 1, "dash": "dot"},
             },
         ],
-        xaxis2={
-            "title": "Count",
-            "domain": [0.8, 1],  # 70 to 100 % of width
-            "titlefont": {"color": "darkgray"},
-            "showgrid": False,
-        },
-        yaxis2={
-            "anchor": "free",
-            "overlaying": "y",
-            "side": "right",
-            "showticklabels": False,
-            "titlefont": {"color": "darkgray"},
-        },
     )
 
     return fig
@@ -1192,68 +1136,6 @@ def update_control_chart(interval, n1, n2, n3, n4, n5, n6, n7, data, cur_fig):
         if prop_type == "n_intervals" and cur_fig is not None:
             curr_id = cur_fig["data"][0]["name"]
             return generate_graph(interval, data, curr_id)
-
-
-# Update piechart
-@app.callback(
-    output=Output("piechart", "figure"),
-    inputs=[Input("interval-component", "n_intervals")],
-    state=[State("value-setter-store", "data")],
-)
-def update_piechart(interval, stored_data):
-    if interval == 0:
-        return {
-            "data": [],
-            "layout": {
-                "font": {"color": "white"},
-                "paper_bgcolor": "rgba(0,0,0,0)",
-                "plot_bgcolor": "rgba(0,0,0,0)",
-            },
-        }
-
-    if interval >= max_length:
-        total_count = max_length - 1
-    else:
-        total_count = interval - 1
-
-    values = []
-    colors = []
-    for param in params[1:]:
-        ooc_param = (stored_data[param]["ooc"][total_count] * 100) + 1
-        values.append(ooc_param)
-        if ooc_param > 6:
-            colors.append("#f45060")
-        else:
-            colors.append("#91dfd2")
-
-    new_figure = {
-        "data": [
-            {
-                "labels": params[1:],
-                "values": values,
-                "type": "pie",
-                "marker": {
-                    "colors": colors,
-                    "line": dict(
-                        color="white",
-                        width=2
-                    )
-                },
-                "hoverinfo": "label",
-                "textinfo": "label",
-            }
-        ],
-        "layout": {
-            "margin": dict(t=20, b=50),
-            "uirevision": True,
-            "font": {"color": "white"},
-            "showlegend": False,
-            "paper_bgcolor": "rgba(0,0,0,0)",
-            "plot_bgcolor": "rgba(0,0,0,0)",
-            "autosize": True,
-        },
-    }
-    return new_figure
 
 
 # Running the server
