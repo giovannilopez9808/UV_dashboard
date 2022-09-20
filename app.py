@@ -13,9 +13,10 @@ import pandas as pd
 
 app = dash.Dash(
     __name__,
-    meta_tags=[{"name": "viewport", "content": "width=device-width, initial-scale=1"}],
+    meta_tags=[{"name": "viewport",
+                "content": "width=device-width, initial-scale=1"}],
 )
-app.title = "Manufacturing SPC Dashboard"
+app.title = "Amadeus model"
 server = app.server
 app.config["suppress_callback_exceptions"] = True
 
@@ -42,23 +43,17 @@ def build_banner():
             html.Div(
                 id="banner-text",
                 children=[
-                    html.H5("Manufacturing SPC Dashboard"),
-                    html.H6("Process Control and Exception Reporting"),
+                    html.H5("Amadeus"),
+                    html.H6("model"),
                 ],
             ),
             html.Div(
                 id="banner-logo",
                 children=[
-                    html.A(
-                        html.Button(children="ENTERPRISE DEMO"),
-                        href="https://plotly.com/get-demo/",
-                    ),
                     html.Button(
-                        id="learn-more-button", children="LEARN MORE", n_clicks=0
-                    ),
-                    html.A(
-                        html.Img(id="logo", src=app.get_asset_url("dash-logo-new.png")),
-                        href="https://plotly.com/dash/",
+                        id="learn-more-button",
+                        children="LEARN MORE",
+                        n_clicks=0
                     ),
                 ],
             ),
@@ -167,12 +162,15 @@ def build_tab_1():
                     id="metric-select-menu",
                     # className='five columns',
                     children=[
-                        html.Label(id="metric-select-title", children="Select Metrics"),
+                        html.Label(id="metric-select-title",
+                                   children="Select Metrics"),
                         html.Br(),
                         dcc.Dropdown(
                             id="metric-select-dropdown",
                             options=list(
-                                {"label": param, "value": param} for param in params[1:]
+                                {"label": param,
+                                 "value": param}
+                                for param in params[1:]
                             ),
                             value=params[1],
                         ),
@@ -187,7 +185,8 @@ def build_tab_1():
                         html.Div(
                             id="button-div",
                             children=[
-                                html.Button("Update", id="value-setter-set-btn"),
+                                html.Button(
+                                    "Update", id="value-setter-set-btn"),
                                 html.Button(
                                     "View current setup",
                                     id="value-setter-view-btn",
@@ -196,7 +195,8 @@ def build_tab_1():
                             ],
                         ),
                         html.Div(
-                            id="value-setter-view-output", className="output-datatable"
+                            id="value-setter-view-output",
+                            className="output-datatable"
                         ),
                     ],
                 ),
@@ -205,18 +205,22 @@ def build_tab_1():
     ]
 
 
-ud_usl_input = daq.NumericInput(
-    id="ud_usl_input", className="setting-input", size=200, max=9999999
-)
-ud_lsl_input = daq.NumericInput(
-    id="ud_lsl_input", className="setting-input", size=200, max=9999999
-)
-ud_ucl_input = daq.NumericInput(
-    id="ud_ucl_input", className="setting-input", size=200, max=9999999
-)
-ud_lcl_input = daq.NumericInput(
-    id="ud_lcl_input", className="setting-input", size=200, max=9999999
-)
+ud_usl_input = daq.NumericInput(id="ud_usl_input",
+                                className="setting-input",
+                                size=200,
+                                max=9999999)
+ud_lsl_input = daq.NumericInput(id="ud_lsl_input",
+                                className="setting-input",
+                                size=200,
+                                max=9999999)
+ud_ucl_input = daq.NumericInput(id="ud_ucl_input",
+                                className="setting-input",
+                                size=200,
+                                max=9999999)
+ud_lcl_input = daq.NumericInput(id="ud_lcl_input",
+                                className="setting-input",
+                                size=200,
+                                max=9999999)
 
 
 def build_value_setter_line(line_num, label, value, col3):
@@ -287,19 +291,19 @@ def build_quick_stats_panel():
         id="quick-stats",
         className="row",
         children=[
-            html.Div(
-                id="card-1",
-                children=[
-                    html.P("Operator ID"),
-                    daq.LEDDisplay(
-                        id="operator-led",
-                        value="1704",
-                        color="#92e0d3",
-                        backgroundColor="#1e2130",
-                        size=50,
-                    ),
-                ],
-            ),
+            # html.Div(
+            # id="card-1",
+            # children=[
+            # html.P("Operator ID"),
+            # daq.LEDDisplay(
+            # id="operator-led",
+            # value="1704",
+            # color="#92e0d3",
+            # backgroundColor="#1e2130",
+            # size=50,
+            # ),
+            # ],
+            # ),
             html.Div(
                 id="card-2",
                 children=[
@@ -314,7 +318,8 @@ def build_quick_stats_panel():
             ),
             html.Div(
                 id="utility-card",
-                children=[daq.StopButton(id="stop-button", size=160, n_clicks=0)],
+                children=[daq.StopButton(
+                    id="stop-button", size=160, n_clicks=0)],
             ),
         ],
     )
@@ -342,13 +347,20 @@ def build_top_panel(stopped_interval):
                             html.Div(
                                 id="metric-rows",
                                 children=[
-                                    generate_metric_row_helper(stopped_interval, 1),
-                                    generate_metric_row_helper(stopped_interval, 2),
-                                    generate_metric_row_helper(stopped_interval, 3),
-                                    generate_metric_row_helper(stopped_interval, 4),
-                                    generate_metric_row_helper(stopped_interval, 5),
-                                    generate_metric_row_helper(stopped_interval, 6),
-                                    generate_metric_row_helper(stopped_interval, 7),
+                                    generate_metric_row_helper(
+                                        stopped_interval, 1),
+                                    generate_metric_row_helper(
+                                        stopped_interval, 2),
+                                    generate_metric_row_helper(
+                                        stopped_interval, 3),
+                                    generate_metric_row_helper(
+                                        stopped_interval, 4),
+                                    generate_metric_row_helper(
+                                        stopped_interval, 5),
+                                    generate_metric_row_helper(
+                                        stopped_interval, 6),
+                                    generate_metric_row_helper(
+                                        stopped_interval, 7),
                                 ],
                             ),
                         ],
@@ -356,14 +368,14 @@ def build_top_panel(stopped_interval):
                 ],
             ),
             # Piechart
-            html.Div(
-                id="ooc-piechart-outer",
-                className="four columns",
-                children=[
-                    generate_section_banner("% OOC per Parameter"),
-                    generate_piechart(),
-                ],
-            ),
+            # html.Div(
+            # id="ooc-piechart-outer",
+            # className="four columns",
+            # children=[
+            # generate_section_banner("% OOC per Parameter"),
+            # generate_piechart(),
+            # ],
+            # ),
         ],
     )
 
@@ -614,7 +626,9 @@ def generate_graph(interval, specs_dict, col):
         "y": [],
         "name": "Out of Control",
         "mode": "markers",
-        "marker": dict(color="rgba(210, 77, 87, 0.7)", symbol="square", size=11),
+        "marker": dict(color="rgba(210, 77, 87, 0.7)",
+                       symbol="square",
+                       size=11),
     }
 
     for index, data in enumerate(y_array[:total_count]):
@@ -655,7 +669,8 @@ def generate_graph(interval, specs_dict, col):
         uirevision=col,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        legend={"font": {"color": "darkgray"}, "orientation": "h", "x": 0, "y": 1.1},
+        legend={"font": {"color": "darkgray"},
+                "orientation": "h", "x": 0, "y": 1.1},
         font={"color": "darkgray"},
         showlegend=True,
         xaxis={
@@ -730,7 +745,8 @@ def generate_graph(interval, specs_dict, col):
                 "y0": usl,
                 "x1": len_figure + 1,
                 "y1": usl,
-                "line": {"color": "#91dfd2", "width": 1, "dash": "dot"},
+                "line": {"color": "#91dfd2",
+                         "width": 1, "dash": "dot"},
             },
             {
                 "type": "line",
@@ -740,7 +756,8 @@ def generate_graph(interval, specs_dict, col):
                 "y0": lsl,
                 "x1": len_figure + 1,
                 "y1": lsl,
-                "line": {"color": "#91dfd2", "width": 1, "dash": "dot"},
+                "line": {"color": "#91dfd2",
+                         "width": 1, "dash": "dot"},
             },
             {
                 "type": "line",
@@ -750,7 +767,8 @@ def generate_graph(interval, specs_dict, col):
                 "y0": ucl,
                 "x1": len_figure + 1,
                 "y1": ucl,
-                "line": {"color": "rgb(255,127,80)", "width": 1, "dash": "dot"},
+                "line": {"color": "rgb(255,127,80)",
+                         "width": 1, "dash": "dot"},
             },
             {
                 "type": "line",
@@ -770,7 +788,8 @@ def generate_graph(interval, specs_dict, col):
                 "y0": lcl,
                 "x1": len_figure + 1,
                 "y1": lcl,
-                "line": {"color": "rgb(255,127,80)", "width": 1, "dash": "dot"},
+                "line": {"color": "rgb(255,127,80)",
+                         "width": 1, "dash": "dot"},
             },
         ],
         xaxis2={
@@ -869,7 +888,8 @@ app.layout = html.Div(
 
 
 @app.callback(
-    [Output("app-content", "children"), Output("interval-component", "n_intervals")],
+    [Output("app-content", "children"),
+     Output("interval-component", "n_intervals")],
     [Input("app-tabs", "value")],
     [State("n-interval-stage", "data")],
 )
@@ -883,7 +903,8 @@ def render_tab_content(tab_switch, stopped_interval):
                 build_quick_stats_panel(),
                 html.Div(
                     id="graphs-container",
-                    children=[build_top_panel(stopped_interval), build_chart_panel()],
+                    children=[build_top_panel(
+                        stopped_interval), build_chart_panel()],
                 ),
             ],
         ),
@@ -911,10 +932,19 @@ def update_interval_state(tab_switch, cur_interval, disabled, cur_stage):
 
 
 # Callbacks for stopping interval update
-@app.callback(
-    [Output("interval-component", "disabled"), Output("stop-button", "buttonText")],
-    [Input("stop-button", "n_clicks")],
-    [State("interval-component", "disabled")],
+@app.callback([
+    Output("interval-component",
+           "disabled"),
+    Output("stop-button",
+           "buttonText")
+],
+    [
+        Input("stop-button",
+              "n_clicks")],
+    [
+        State("interval-component",
+              "disabled")
+],
 )
 def stop_production(n_clicks, current):
     if n_clicks == 0:
@@ -922,10 +952,14 @@ def stop_production(n_clicks, current):
     return not current, "stop" if current else "start"
 
 
-# ======= Callbacks for modal popup =======
+# = Callbacks for modal popup =
 @app.callback(
     Output("markdown", "style"),
-    [Input("learn-more-button", "n_clicks"), Input("markdown_close", "n_clicks")],
+    [Input("learn-more-button",
+           "n_clicks"),
+     Input("markdown_close",
+           "n_clicks")
+     ],
 )
 def update_click_output(button_click, close_click):
     ctx = dash.callback_context
@@ -938,7 +972,7 @@ def update_click_output(button_click, close_click):
     return {"display": "none"}
 
 
-# ======= update progress gauge =========
+# = update progress gauge ===
 @app.callback(
     output=Output("progress-gauge", "value"),
     inputs=[Input("interval-component", "n_intervals")],
@@ -952,7 +986,7 @@ def update_gauge(interval):
     return int(total_count)
 
 
-# ===== Callbacks to update values based on store data and dropdown selection =====
+# Callbacks to update values based on store data and dropdown selection
 @app.callback(
     output=[
         Output("value-setter-panel", "children"),
@@ -1005,7 +1039,7 @@ def build_value_setter_panel(dd_select, state_value):
     )
 
 
-# ====== Callbacks to update stored data via click =====
+#  Callbacks to update stored data via click =====
 @app.callback(
     output=Output("value-setter-store", "data"),
     inputs=[Input("value-setter-set-btn", "n_clicks")],
@@ -1073,14 +1107,18 @@ def show_current_specs(n_clicks, dd_select, store_data):
                 "border": "none",
             },
             css=[
-                {"selector": "tr:hover td", "rule": "color: #91dfd2 !important;"},
-                {"selector": "td", "rule": "border: none !important;"},
+                {"selector": "tr:hover td",
+                 "rule": "color: #91dfd2 !important;"},
+                {"selector": "td",
+                 "rule": "border: none !important;"},
                 {
                     "selector": ".dash-cell.focused",
                     "rule": "background-color: #1e2130 !important;",
                 },
-                {"selector": "table", "rule": "--accent: #1e2130;"},
-                {"selector": "tr", "rule": "background-color: transparent"},
+                {"selector": "table",
+                 "rule": "--accent: #1e2130;"},
+                {"selector": "tr",
+                 "rule": "background-color: transparent"},
             ],
             data=new_df.to_dict("rows"),
             columns=[{"id": c, "name": c} for c in ["Specs", "Current Setup"]],
@@ -1114,7 +1152,7 @@ for param in params[1:]:
     )(update_param_row_function)
 
 
-#  ======= button to choose/update figure based on click ============
+# button to choose/update figure based on click
 @app.callback(
     output=Output("control-chart-live", "figure"),
     inputs=[
@@ -1127,7 +1165,8 @@ for param in params[1:]:
         Input(params[6] + suffix_button_id, "n_clicks"),
         Input(params[7] + suffix_button_id, "n_clicks"),
     ],
-    state=[State("value-setter-store", "data"), State("control-chart-live", "figure")],
+    state=[State("value-setter-store", "data"),
+           State("control-chart-live", "figure")],
 )
 def update_control_chart(interval, n1, n2, n3, n4, n5, n6, n7, data, cur_fig):
     # Find which one has been triggered
@@ -1193,7 +1232,13 @@ def update_piechart(interval, stored_data):
                 "labels": params[1:],
                 "values": values,
                 "type": "pie",
-                "marker": {"colors": colors, "line": dict(color="white", width=2)},
+                "marker": {
+                    "colors": colors,
+                    "line": dict(
+                        color="white",
+                        width=2
+                    )
+                },
                 "hoverinfo": "label",
                 "textinfo": "label",
             }
